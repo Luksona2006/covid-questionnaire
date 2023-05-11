@@ -4,7 +4,7 @@
       <img src="images/second_logo.png" alt="redberry-logo" />
     </div>
     <div>
-      <h2 class="text-[40px] font-bold font-anonymousBold">{{ pageNum }}/4</h2>
+      <h2 class="text-[40px] font-bold font-[anonymousBold]">{{ pageNum }}/4</h2>
     </div>
   </header>
 </template>
