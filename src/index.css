@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: AnonymousRegular;
+  src: url('../public/fonts/AnonymousPro-Regular.ttf');
+}
+
+@font-face {
+  font-family: AnonymousBold;
+  src: url('../public/fonts/AnonymousPro-Bold.ttf');
+}
