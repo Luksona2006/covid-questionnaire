@@ -51,7 +51,7 @@
         </div>
       </div>
       <div>
-        <img class="w-full" src="@/assets/images/doctor.png" alt="doctor" />
+        <img class="w-full" src="@/assets/images/Doctor.png" alt="doctor" />
       </div>
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
     </Form>

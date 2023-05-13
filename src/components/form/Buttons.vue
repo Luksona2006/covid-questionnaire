@@ -19,8 +19,7 @@ import arrowLeft from '@/assets/icons/arrowLeft.vue'
 import arrowRight from '@/assets/icons/arrowRight.vue'
 const props = defineProps({
   isAvailable: {
-    required: true,
-    default: false
+    required: true
   },
   previousRoute: {
     required: false,

@@ -31,7 +31,7 @@
         <TheHint class="mt-18" />
       </div>
       <div>
-        <img class="w-full" src="@/assets/images/scan.png" alt="standing-people-with-star-eyes" />
+        <img class="w-full" src="@/assets/images/Scan.png" alt="standing-people-with-star-eyes" />
       </div>
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
     </Form>

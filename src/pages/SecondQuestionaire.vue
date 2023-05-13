@@ -47,7 +47,7 @@
         </div>
       </div>
       <div>
-        <img class="w-full" src="@/assets/images/vaccinate.png" alt="ill-man" />
+        <img class="w-full" src="@/assets/images/Vaccinate.png" alt="ill-man" />
       </div>
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
     </Form>

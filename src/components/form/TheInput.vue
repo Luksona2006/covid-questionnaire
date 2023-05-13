@@ -45,8 +45,7 @@ const props = defineProps({
   },
   modelValue: {
     required: true,
-    type: String || Number,
-    default: ''
+    type: String || Number
   },
   stateKey: {
     required: true,

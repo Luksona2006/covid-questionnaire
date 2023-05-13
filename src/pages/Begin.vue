@@ -3,7 +3,7 @@
     class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-24"
   >
     <div>
-      <img src="@/assets/images/mainLogo.png" alt="redberry-logo" />
+      <img src="@/assets/images/MainLogo.png" alt="redberry-logo" />
     </div>
     <div class="relative w-fit">
       <router-link

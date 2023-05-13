@@ -53,7 +53,7 @@
         </div>
       </div>
       <div>
-        <img class="w-full" src="@/assets/images/bike.png" alt="man-riding-bike" />
+        <img class="w-full" src="@/assets/images/Bike.png" alt="man-riding-bike" />
       </div>
       <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="isAvailable" />
     </Form>
