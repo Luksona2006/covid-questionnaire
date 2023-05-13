@@ -1,6 +1,10 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import Begin from '../pages/Begin.vue'
-import FirstQuestionarie from '../pages/FirstQuestionarie.vue'
+import Begin from '@/pages/Begin.vue'
+import FirstQuestionarie from '@/pages/FirstQuestionaire.vue'
+import SecondQuestionaire from '@/pages/SecondQuestionaire.vue'
+import ThirdQuestionaire from '@/pages/ThirdQuestionaire.vue'
+import FourthQuestionaire from '@/pages/FourthQuestionaire.vue'
+
 const routes = [
   {
     path: '/',
@@ -15,7 +19,17 @@ const routes = [
   {
     path: '/second-questionaire',
     name: 'second-questionaire',
-    component: Begin // For test purposes
+    component: SecondQuestionaire
+  },
+  {
+    path: '/third-questionaire',
+    name: 'third-questionaire',
+    component: ThirdQuestionaire
+  },
+  {
+    path: '/fourth-questionaire',
+    name: 'fourth-questionaire',
+    component: FourthQuestionaire
   }
 ]
 
