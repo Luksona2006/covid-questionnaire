@@ -20,14 +20,17 @@ import { useStore } from 'vuex'
 
 const props = defineProps({
   title: {
+    required: false,
     type: String,
     default: ''
   },
   modelValue: {
+    required: true,
     type: String || Number,
     default: ''
   },
   stateKey: {
+    required: true,
     type: String,
     required: true
   }

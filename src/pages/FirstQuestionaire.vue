@@ -31,7 +31,7 @@
         <TheHint class="mt-18" />
       </div>
       <div>
-        <img class="w-full" src="images/scan.png" alt="standing-people-with-star-eyes" />
+        <img class="w-full" src="@/assets/images/scan.png" alt="standing-people-with-star-eyes" />
       </div>
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
     </Form>
@@ -43,11 +43,11 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 
-import TheHeader from '../components/TheHeader.vue'
-import TheContainer from '../components/TheContainer.vue'
-import TheInput from '../components/form/TheInput.vue'
-import TheHint from '../components/TheHint.vue'
-import Buttons from '../components/form/Buttons.vue'
+import TheHeader from '@/components/TheHeader.vue'
+import TheContainer from '@/components/TheContainer.vue'
+import TheInput from '@/components/form/TheInput.vue'
+import TheHint from '@/components/TheHint.vue'
+import Buttons from '@/components/form/Buttons.vue'
 
 const previousRoute = ref('/')
 const nextRoute = ref('second-questionaire')

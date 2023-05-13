@@ -29,26 +29,32 @@ import { useStore } from 'vuex'
 
 const props = defineProps({
   title: {
+    required: false,
     type: String,
-    default: '1'
+    default: ''
   },
   isImportant: {
+    required: false,
     type: Boolean,
     default: false
   },
   type: {
+    required: false,
     type: String,
-    default: 'text'
+    default: 'radio'
   },
   placeholder: {
+    required: false,
     type: String,
     default: ''
   },
   modelValue: {
+    required: true,
     type: String || Number,
     default: ''
   },
   stateKey: {
+    required: true,
     type: String,
     required: true
   },
@@ -56,6 +62,7 @@ const props = defineProps({
     required: true
   },
   options: {
+    required: true,
     type: Array,
     default: []
   }

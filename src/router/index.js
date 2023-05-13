@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import Begin from '../pages/Begin.vue'
-import FirstQuestionarie from '../pages/FirstQuestionaire.vue'
-import SecondQuestionaire from '../pages/SecondQuestionaire.vue'
-import ThirdQuestionaire from '../pages/ThirdQuestionaire.vue'
-import FourthQuestionaire from '../pages/FourthQuestionaire.vue'
+import Begin from '@/pages/Begin.vue'
+import FirstQuestionarie from '@/pages/FirstQuestionaire.vue'
+import SecondQuestionaire from '@/pages/SecondQuestionaire.vue'
+import ThirdQuestionaire from '@/pages/ThirdQuestionaire.vue'
+import FourthQuestionaire from '@/pages/FourthQuestionaire.vue'
 
 const routes = [
   {

@@ -5,7 +5,6 @@
     </label>
 
     <Field
-      v-if="!hasOptions"
       :name="stateKey"
       :type="type"
       :placeholder="placeholder"
@@ -25,35 +24,36 @@ import { Field, ErrorMessage } from 'vee-validate'
 
 const props = defineProps({
   title: {
+    required: false,
     type: String,
     default: ''
   },
   isImportant: {
+    required: false,
     type: Boolean,
     default: false
   },
   type: {
+    required: false,
     type: String,
     default: 'text'
   },
   placeholder: {
+    required: false,
     type: String,
     default: ''
   },
   modelValue: {
+    required: true,
     type: String || Number,
     default: ''
   },
   stateKey: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   validation: {
     required: true
-  },
-  options: {
-    type: Array,
-    default: []
   }
 })
 

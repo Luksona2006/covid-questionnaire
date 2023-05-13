@@ -53,7 +53,7 @@
         </div>
       </div>
       <div>
-        <img class="w-full" src="images/bike.png" alt="man-riding-bike" />
+        <img class="w-full" src="@/assets/images/bike.png" alt="man-riding-bike" />
       </div>
       <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="isAvailable" />
     </Form>
@@ -64,11 +64,11 @@
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 
-import TheHeader from '../components/TheHeader.vue'
-import TheContainer from '../components/TheContainer.vue'
-import Buttons from '../components/form/Buttons.vue'
-import InputWithOptions from '../components/form/InputWithOptions.vue'
-import TheTextarea from '../components/form/TheTextarea.vue'
+import TheHeader from '@/components/TheHeader.vue'
+import TheContainer from '@/components/TheContainer.vue'
+import Buttons from '@/components/form/Buttons.vue'
+import InputWithOptions from '@/components/form/InputWithOptions.vue'
+import TheTextarea from '@/components/form/TheTextarea.vue'
 import { useStore } from 'vuex'
 
 const previousRoute = ref('third-questionaire')

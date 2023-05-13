@@ -47,7 +47,7 @@
         </div>
       </div>
       <div>
-        <img class="w-full" src="images/vaccinate.png" alt="ill-man" />
+        <img class="w-full" src="@/assets/images/vaccinate.png" alt="ill-man" />
       </div>
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
     </Form>
@@ -59,11 +59,11 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 
-import TheHeader from '../components/TheHeader.vue'
-import TheContainer from '../components/TheContainer.vue'
-import Buttons from '../components/form/Buttons.vue'
-import InputWithOptions from '../components/form/InputWithOptions.vue'
-import TheInput from '../components/form/TheInput.vue'
+import TheHeader from '@/components/TheHeader.vue'
+import TheContainer from '@/components/TheContainer.vue'
+import Buttons from '@/components/form/Buttons.vue'
+import InputWithOptions from '@/components/form/InputWithOptions.vue'
+import TheInput from '@/components/form/TheInput.vue'
 
 const previousRoute = ref('first-questionaire')
 const nextRoute = ref('third-questionaire')
