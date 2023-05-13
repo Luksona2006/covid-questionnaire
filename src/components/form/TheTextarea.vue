@@ -6,7 +6,7 @@
 
     <textarea
       :name="stateKey"
-      :value="modelValue"
+      :value="store.state[stateKey]"
       @input="changeValue($event.target.value)"
       class="border-[0.8px] border-[#232323] py-3 px-5 outline-none w-full resize-none"
       rows="6"
@@ -40,12 +40,9 @@ const marked = computed(function () {
 
 const labelTitle = props.title + '' + marked.value
 
-const emits = defineEmits(['update:modelValue'])
-
 const store = useStore()
 
 function changeValue(value) {
-  emits('update:modelValue', value)
   store.commit('changeValue', { value, stateKey: props.stateKey })
 }
 </script>

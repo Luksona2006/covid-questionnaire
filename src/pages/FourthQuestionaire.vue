@@ -14,7 +14,6 @@
           title="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?"
           type="radio"
           :isImportant="true"
-          v-model="non_formal_meetings"
           stateKey="non_formal_meetings"
           :options="firstQuestionOptions"
           :validation="validateIsSelected"
@@ -23,19 +22,16 @@
           title="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?"
           type="radio"
           :isImportant="true"
-          v-model="number_of_days_from_office"
           stateKey="number_of_days_from_office"
           :options="secondQuestionOptions"
           :validation="validateIsSelected"
         />
         <TheTextarea
           title="რას ფიქრობ ფიზიკურ შეკრებებზე?"
-          v-model="what_about_meetings_in_live"
           stateKey="what_about_meetings_in_live"
         />
         <TheTextarea
           title="რას ფიქრობ არსებულ გარემოზე: რა მოგწონს, რას დაამატებდი, რას შეცვლიდი?"
-          v-model="tell_us_your_opinion_about_us"
           stateKey="tell_us_your_opinion_about_us"
         />
         <div class="ml-auto">
@@ -62,14 +58,15 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import { Form } from 'vee-validate'
+import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
 import Buttons from '@/components/form/Buttons.vue'
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheTextarea from '@/components/form/TheTextarea.vue'
-import { useStore } from 'vuex'
 
 const previousRoute = ref('third-questionaire')
 const nextRoute = ref(false)
@@ -137,21 +134,54 @@ const secondQuestionOptions = ref([
 
 const store = useStore()
 
+const stateWithValidations = [
+  {
+    value: store.state['non_formal_meetings'],
+    validation: validateIsSelected
+  },
+  {
+    value: store.state['number_of_days_from_office'],
+    validation: validateIsSelected
+  }
+]
+
+if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
+  isAvailable.value.show = true
+  isAvailable.value.next = false
+  if (isAvailableValidation(stateWithValidations).isValid) {
+    isAvailable.value.next = true
+  }
+}
+
 watch(
   () => [store.state['non_formal_meetings'], store.state['number_of_days_from_office']],
   () => {
+    const stateWithValidations = [
+      {
+        value: store.state['non_formal_meetings'],
+        validation: validateIsSelected
+      },
+      {
+        value: store.state['number_of_days_from_office'],
+        validation: validateIsSelected
+      }
+    ]
+
     isAvailable.value.show = false
     isAvailable.value.next = false
 
-    if (store.state['non_formal_meetings'] && store.state['number_of_days_from_office']) {
+    if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
       isAvailable.value.show = true
-      isAvailable.value.next = true
+      isAvailable.value.next = false
+      if (isAvailableValidation(stateWithValidations).isValid) {
+        isAvailable.value.next = true
+      }
     }
   }
 )
 
 function validateIsSelected(value) {
-  if (!value) {
+  if (value === '') {
     return 'აირჩიეთ რომელიმე ვარიანტი'
   }
 

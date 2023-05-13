@@ -7,39 +7,36 @@
           title="უკვე აცრილი ხარ?"
           type="radio"
           :isImportant="true"
-          v-model="had_vaccine"
           stateKey="had_vaccine"
           :options="firstQuestionOptions"
           :validation="validateIsSelected"
         />
         <InputWithOptions
-          v-if="had_vaccine === 'კი'"
+          v-if="store.state['had_vaccine'] === true"
           title="აირჩიე რა ეტაპზე ხარ"
           type="radio"
           :isImportant="true"
-          v-model="vaccination_stage"
           stateKey="vaccination_stage"
           :options="secondQuestionOptions"
           :validation="validateIsSelected"
         />
         <InputWithOptions
-          v-if="had_vaccine === 'არა'"
+          v-if="store.state['had_vaccine'] === false"
           title="რას ელოდები?"
           type="radio"
           :isImportant="true"
-          v-model="vaccination_stage"
           stateKey="vaccination_stage"
           :options="thirdQuestionOptions"
           :validation="validateIsSelected"
         />
-        <div v-if="vaccination_stage">
+        <div v-if="store.state['vaccination_stage'] !== ''">
           <p>
-            <span v-show="vaccination_stage === secondQuestionOptions[2].title">
+            <span v-show="store.state['vaccination_stage'] === secondQuestionOptions[2].title">
               რომ არ გადადო, <br />
               ბარემ ახლავე დარეგისტრირდი <br />
               <br />
             </span>
-            <span v-show="vaccination_stage === thirdQuestionOptions[2].title">
+            <span v-show="store.state['vaccination_stage'] === thirdQuestionOptions[2].title">
               ახალი პროტოკოლით კოვიდის გადატანიდან 1 <br />
               თვის შემდეგ შეგიძლიათ ვაქცინის გაკეთება. 👉 <br />
               <br />
@@ -62,6 +59,7 @@
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -127,25 +125,53 @@ const thirdQuestionOptions = ref([
 
 const store = useStore()
 
+const stateWithValidations = [
+  {
+    value: store.state['had_vaccine'],
+    validation: validateIsSelected
+  },
+  {
+    value: store.state['vaccination_stage'],
+    validation: validateIsSelected
+  }
+]
+
+if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
+  isAvailable.value.show = true
+  isAvailable.value.next = false
+  if (isAvailableValidation(stateWithValidations).isValid) {
+    isAvailable.value.next = true
+  }
+}
+
 watch(
   () => [store.state['had_vaccine'], store.state['vaccination_stage']],
   () => {
+    const stateWithValidations = [
+      {
+        value: store.state['had_vaccine'],
+        validation: validateIsSelected
+      },
+      {
+        value: store.state['vaccination_stage'],
+        validation: validateIsSelected
+      }
+    ]
+
     isAvailable.value.show = false
     isAvailable.value.next = false
 
-    if (store.state['had_vaccine'] !== '' && !!store.state['vaccination_stage']) {
+    if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
       isAvailable.value.show = true
-      isAvailable.value.next = true
+      if (isAvailableValidation(stateWithValidations).isValid) {
+        isAvailable.value.next = true
+      }
     }
-
-    // if (store.state['had_antibody_test'] === 'არა') {
-    //   store.commit('changeValue', { value: '', stateKey: 'number' })
-    // }
   }
 )
 
 function validateIsSelected(value) {
-  if (!value) {
+  if (value === '') {
     return 'აირჩიეთ რომელიმე ვარიანტი'
   }
 

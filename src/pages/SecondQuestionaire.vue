@@ -7,17 +7,15 @@
           title="გაქვს გადატანილი Covid-19?"
           type="radio"
           :isImportant="true"
-          v-model="had_covid"
           stateKey="had_covid"
           :options="firstQuestionOptions"
           :validation="validateIsSelected"
         />
         <InputWithOptions
-          v-if="had_covid !== 'არა' && had_covid"
+          v-if="store.state['had_covid'] !== 'no' && store.state['had_covid']"
           title="ანტისხეულების ტესტი გაქვს გაკეთებული?"
           type="radio"
           :isImportant="true"
-          v-model="had_antibody_test"
           stateKey="had_antibody_test"
           :options="secondQuestionOptions"
           :validation="validateIsSelected"
@@ -28,11 +26,10 @@
               title="თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და ანტისხეულების რაოდენობა"
               type="date"
               placeholder="თარიღი"
-              v-model="test_date"
               stateKey="test_date"
             />
 
-            <TheInput placeholder="ანტისხეულების რაოდენობა" v-model="number" stateKey="number" />
+            <TheInput placeholder="ანტისხეულების რაოდენობა" stateKey="number" />
           </div>
           <TheInput
             v-else
@@ -40,7 +37,6 @@
             type="date"
             :isImportant="true"
             placeholder="თარიღი"
-            v-model="covid_date"
             stateKey="covid_date"
             :validation="isNotEmpty"
           />
@@ -58,6 +54,7 @@
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -106,6 +103,37 @@ const secondQuestionOptions = ref([
 
 const store = useStore()
 
+const stateWithValidations = [
+  {
+    value: store.state['had_covid'],
+    validation: validateIsSelected
+  },
+  store.state['had_covid'] !== 'no'
+    ? {
+        value: store.state['had_antibody_test'],
+        validation: validateIsSelected
+      }
+    : '',
+  store.state['had_covid'] !== 'no'
+    ? {
+        value: store.state['covid_date'],
+        validation: isNotEmpty
+      }
+    : ''
+]
+
+console.log(isAvailableValidation(stateWithValidations).isValid, stateWithValidations)
+
+if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
+  isAvailable.value.show = true
+  isAvailable.value.next = false
+  if (isAvailableValidation(stateWithValidations).isValid) {
+    isAvailable.value.next = true
+  }
+}
+
+console.log(isAvailable.value.next)
+
 watch(
   () => [store.state['had_covid'], store.state['had_antibody_test'], store.state['covid_date']],
   () => {
@@ -117,11 +145,7 @@ watch(
 
     isAvailable.value.show = false
     isAvailable.value.next = false
-    if (
-      !!hadCovid &&
-      (checkAntibodyTest === false || checkAntibodyTest === true) &&
-      checkCovidDate
-    ) {
+    if (hadCovid && (checkAntibodyTest === false || checkAntibodyTest === true) && checkCovidDate) {
       isAvailable.value.show = true
       isAvailable.value.next = true
     }
@@ -130,6 +154,7 @@ watch(
       store.commit('changeValue', { value: '', stateKey: 'had_antibody_test' })
       store.commit('changeValue', { value: '', stateKey: 'test_date' })
       store.commit('changeValue', { value: '', stateKey: 'number' })
+      store.commit('changeValue', { value: '', stateKey: 'covid_date' })
     }
 
     if (store.state['had_antibody_test'] === false || store.state['had_antibody_test'] === '') {
@@ -144,7 +169,7 @@ watch(
 )
 
 function validateIsSelected(value) {
-  if (!value) {
+  if (value === '') {
     return 'აირჩიეთ რომელიმე ვარიანტი'
   }
 
@@ -152,7 +177,7 @@ function validateIsSelected(value) {
 }
 
 function isNotEmpty(value) {
-  if (!value) {
+  if (value === '') {
     return 'მონაცემი უნდა იყოს შევსებული'
   }
 

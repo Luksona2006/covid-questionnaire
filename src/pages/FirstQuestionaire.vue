@@ -7,24 +7,21 @@
           title="სახელი"
           :isImportant="true"
           placeholder="იოსებ"
-          v-model="name"
-          stateKey="name"
-          :validation="validateName"
+          stateKey="first_name"
+          :validation="validateFirstName"
         />
         <TheInput
           title="გვარი"
           :isImportant="true"
           placeholder="ჯუღაშვილი"
-          v-model="surname"
-          stateKey="surname"
-          :validation="validateSurname"
+          stateKey="last_name"
+          :validation="validateLastName"
         />
         <TheInput
           title="მეილი"
           type="email"
           :isImportant="true"
           placeholder="fbi@redberry.ge"
-          v-model="email"
           stateKey="email"
           :validation="validateEmail"
         />
@@ -42,6 +39,7 @@
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -59,24 +57,60 @@ const isAvailable = ref({
 
 const store = useStore()
 
+const stateWithValidations = [
+  {
+    value: store.state['first_name'],
+    validation: validateFirstName
+  },
+  {
+    value: store.state['last_name'],
+    validation: validateLastName
+  },
+  {
+    value: store.state.email,
+    validation: validateEmail
+  }
+]
+
+if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
+  isAvailable.value.show = true
+  isAvailable.value.next = false
+  if (isAvailableValidation(stateWithValidations).isValid) {
+    isAvailable.value.next = true
+  }
+}
+
 watch(
-  () => [store.state.name, store.state.surname, store.state.email],
+  () => [store.state['first_name'], store.state['last_name'], store.state.email],
   () => {
-    if (store.state.name && store.state.surname && store.state.email) {
+    const stateWithValidations = [
+      {
+        value: store.state['first_name'],
+        validation: validateFirstName
+      },
+      {
+        value: store.state['last_name'],
+        validation: validateLastName
+      },
+      {
+        value: store.state.email,
+        validation: validateEmail
+      }
+    ]
+
+    isAvailable.value.show = false
+    isAvailable.value.next = false
+
+    if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
       isAvailable.value.show = true
-      isAvailable.value.next = false
-      if (
-        validateName(store.state.name) === true &&
-        validateSurname(store.state.surname) === true &&
-        validateEmail(store.state.email) === true
-      ) {
+      if (isAvailableValidation(stateWithValidations).isValid) {
         isAvailable.value.next = true
       }
     }
   }
 )
 
-function validateName(value) {
+function validateFirstName(value) {
   if (!value) {
     return 'მონაცემი უნდა იყოს შევსებული'
   }
@@ -88,8 +122,8 @@ function validateName(value) {
 
   return true
 }
-function validateSurname(value) {
-  if (!value) {
+function validateLastName(value) {
+  if (value === '') {
     return 'მონაცემი უნდა იყოს შევსებული'
   }
 
@@ -101,7 +135,7 @@ function validateSurname(value) {
   return true
 }
 function validateEmail(value) {
-  if (!value) {
+  if (value === '') {
     return 'მონაცემი უნდა იყოს შევსებული'
   }
 
