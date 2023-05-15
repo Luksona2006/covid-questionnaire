@@ -9,7 +9,6 @@
           :isImportant="true"
           stateKey="had_covid"
           :options="firstQuestionOptions"
-          :validation="validateIsSelected"
         />
         <InputWithOptions
           v-if="store.state['had_covid'] !== 'no' && store.state['had_covid']"
@@ -18,7 +17,6 @@
           :isImportant="true"
           stateKey="had_antibody_test"
           :options="secondQuestionOptions"
-          :validation="validateIsSelected"
         />
         <div v-if="store.state['had_antibody_test'] !== ''">
           <div class="flex flex-col gap-6" v-if="store.state['had_antibody_test'] === true">
@@ -38,7 +36,7 @@
             :isImportant="true"
             placeholder="თარიღი"
             stateKey="covid_date"
-            :validation="isNotEmpty"
+            :validation="required"
           />
         </div>
       </div>
@@ -55,6 +53,7 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import isAvailableValidation from '@/store/isAvailableValidation.js'
+import { required } from '../config/vee-validate/rules.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -105,24 +104,20 @@ const store = useStore()
 
 const stateWithValidations = [
   {
-    value: store.state['had_covid'],
-    validation: validateIsSelected
+    value: store.state['had_covid']
   },
   store.state['had_covid'] !== 'no'
     ? {
-        value: store.state['had_antibody_test'],
-        validation: validateIsSelected
+        value: store.state['had_antibody_test']
       }
     : '',
   store.state['had_covid'] !== 'no'
     ? {
         value: store.state['covid_date'],
-        validation: isNotEmpty
+        validation: required
       }
     : ''
 ]
-
-console.log(isAvailableValidation(stateWithValidations).isValid, stateWithValidations)
 
 if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
   isAvailable.value.show = true
@@ -131,8 +126,6 @@ if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
     isAvailable.value.next = true
   }
 }
-
-console.log(isAvailable.value.next)
 
 watch(
   () => [store.state['had_covid'], store.state['had_antibody_test'], store.state['covid_date']],
@@ -167,20 +160,4 @@ watch(
     }
   }
 )
-
-function validateIsSelected(value) {
-  if (value === '') {
-    return 'აირჩიეთ რომელიმე ვარიანტი'
-  }
-
-  return true
-}
-
-function isNotEmpty(value) {
-  if (value === '') {
-    return 'მონაცემი უნდა იყოს შევსებული'
-  }
-
-  return true
-}
 </script>

@@ -17,7 +17,6 @@
           class="border-[0.8px] border-[#232323] py-3 px-5 outline-none w-fit"
           :checked="option.storeData === store.state[stateKey] ? true : false"
         />
-        <ErrorMessage :name="stateKey" class="text-[#F15524]" />
         <label :for="option.id" class="text-xl w-max">
           {{ option.title }}
         </label>
@@ -27,7 +26,7 @@
 </template>
 
 <script setup>
-import { Field, ErrorMessage } from 'vee-validate'
+import { Field } from 'vee-validate'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 

@@ -9,7 +9,6 @@
           :isImportant="true"
           stateKey="had_vaccine"
           :options="firstQuestionOptions"
-          :validation="validateIsSelected"
         />
         <InputWithOptions
           v-if="store.state['had_vaccine'] === true"
@@ -18,7 +17,6 @@
           :isImportant="true"
           stateKey="vaccination_stage"
           :options="secondQuestionOptions"
-          :validation="validateIsSelected"
         />
         <InputWithOptions
           v-if="store.state['had_vaccine'] === false"
@@ -27,7 +25,6 @@
           :isImportant="true"
           stateKey="vaccination_stage"
           :options="thirdQuestionOptions"
-          :validation="validateIsSelected"
         />
         <div v-if="store.state['vaccination_stage'] !== ''">
           <p>
@@ -114,12 +111,12 @@ const thirdQuestionOptions = ref([
   {
     id: 7,
     title: 'არ ვგეგმავ',
-    storeData: 'registered_and_waiting_for_a_date'
+    storeData: 'did_not_plan_yet'
   },
   {
     id: 8,
     title: 'გადატანილი მაქვს და ვგეგმავ აცრას',
-    storeData: 'did_not_plan_yet'
+    storeData: 'i_have_been_infected_and_i_plan_to_get_vaccinated'
   }
 ])
 
@@ -127,12 +124,10 @@ const store = useStore()
 
 const stateWithValidations = [
   {
-    value: store.state['had_vaccine'],
-    validation: validateIsSelected
+    value: store.state['had_vaccine']
   },
   {
-    value: store.state['vaccination_stage'],
-    validation: validateIsSelected
+    value: store.state['vaccination_stage']
   }
 ]
 
@@ -149,12 +144,10 @@ watch(
   () => {
     const stateWithValidations = [
       {
-        value: store.state['had_vaccine'],
-        validation: validateIsSelected
+        value: store.state['had_vaccine']
       },
       {
-        value: store.state['vaccination_stage'],
-        validation: validateIsSelected
+        value: store.state['vaccination_stage']
       }
     ]
 
@@ -167,14 +160,19 @@ watch(
         isAvailable.value.next = true
       }
     }
+
+    if (
+      (store.state['had_vaccine'] === true &&
+        (store.state['vaccination_stage'] === thirdQuestionOptions.value[0].storeData ||
+          store.state['vaccination_stage'] === thirdQuestionOptions.value[1].storeData ||
+          store.state['vaccination_stage'] === thirdQuestionOptions.value[2].storeData)) ||
+      (store.state['had_vaccine'] === false &&
+        (store.state['vaccination_stage'] === secondQuestionOptions.value[0].storeData ||
+          store.state['vaccination_stage'] === secondQuestionOptions.value[1].storeData ||
+          store.state['vaccination_stage'] === secondQuestionOptions.value[2].storeData))
+    ) {
+      store.commit('changeValue', { value: '', stateKey: 'vaccination_stage' })
+    }
   }
 )
-
-function validateIsSelected(value) {
-  if (value === '') {
-    return 'აირჩიეთ რომელიმე ვარიანტი'
-  }
-
-  return true
-}
 </script>

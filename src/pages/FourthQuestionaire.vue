@@ -16,7 +16,6 @@
           :isImportant="true"
           stateKey="non_formal_meetings"
           :options="firstQuestionOptions"
-          :validation="validateIsSelected"
         />
         <InputWithOptions
           title="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?"
@@ -24,7 +23,6 @@
           :isImportant="true"
           stateKey="number_of_days_from_office"
           :options="secondQuestionOptions"
-          :validation="validateIsSelected"
         />
         <TheTextarea
           title="რას ფიქრობ ფიზიკურ შეკრებებზე?"
@@ -136,12 +134,10 @@ const store = useStore()
 
 const stateWithValidations = [
   {
-    value: store.state['non_formal_meetings'],
-    validation: validateIsSelected
+    value: store.state['non_formal_meetings']
   },
   {
-    value: store.state['number_of_days_from_office'],
-    validation: validateIsSelected
+    value: store.state['number_of_days_from_office']
   }
 ]
 
@@ -158,12 +154,10 @@ watch(
   () => {
     const stateWithValidations = [
       {
-        value: store.state['non_formal_meetings'],
-        validation: validateIsSelected
+        value: store.state['non_formal_meetings']
       },
       {
-        value: store.state['number_of_days_from_office'],
-        validation: validateIsSelected
+        value: store.state['number_of_days_from_office']
       }
     ]
 
@@ -179,12 +173,4 @@ watch(
     }
   }
 )
-
-function validateIsSelected(value) {
-  if (value === '') {
-    return 'აირჩიეთ რომელიმე ვარიანტი'
-  }
-
-  return true
-}
 </script>

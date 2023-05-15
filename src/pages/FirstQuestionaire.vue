@@ -40,6 +40,7 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import isAvailableValidation from '@/store/isAvailableValidation.js'
+import { validateFirstName, validateLastName, validateEmail } from '../config/vee-validate/rules.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -109,41 +110,4 @@ watch(
     }
   }
 )
-
-function validateFirstName(value) {
-  if (!value) {
-    return 'მონაცემი უნდა იყოს შევსებული'
-  }
-
-  const regex = /\w{2,}/i
-  if (!regex.test(value)) {
-    return 'სახელი უნდა შედგებოდეს მინიმუმ 2 სიმბოლოსგან'
-  }
-
-  return true
-}
-function validateLastName(value) {
-  if (value === '') {
-    return 'მონაცემი უნდა იყოს შევსებული'
-  }
-
-  const regex = /\w{2,}/i
-  if (!regex.test(value)) {
-    return 'გვარი უნდა შედგებოდეს მინიმუმ 2 სიმბოლოსგან'
-  }
-
-  return true
-}
-function validateEmail(value) {
-  if (value === '') {
-    return 'მონაცემი უნდა იყოს შევსებული'
-  }
-
-  const regex = /^\w+@redberry.ge$/i
-  if (!regex.test(value)) {
-    return 'მეილი უნდა იყოს @redberry.ge დაბოლოებით'
-  }
-
-  return true
-}
 </script>
