@@ -35,7 +35,7 @@ export function validateEmail(value) {
     return 'მონაცემი უნდა იყოს შევსებული'
   }
 
-  const regex = /^\w+@redberry.ge$/i
+  const regex = /\w+@redberry.ge$/i
   if (!regex.test(value)) {
     return 'მეილი უნდა იყოს @redberry.ge დაბოლოებით'
   }

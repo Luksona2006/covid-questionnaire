@@ -37,7 +37,7 @@ onBeforeMount(() => {
     email: '',
     had_covid: '',
     had_antibody_test: '',
-    covid_date: '',
+    covid_sickness_date: '',
     test_date: '',
     number: '',
     had_vaccine: '',

@@ -35,7 +35,7 @@
             type="date"
             :isImportant="true"
             placeholder="თარიღი"
-            stateKey="covid_date"
+            stateKey="covid_sickness_date"
             :validation="required"
           />
         </div>
@@ -113,7 +113,7 @@ const stateWithValidations = [
     : '',
   store.state['had_covid'] !== 'no'
     ? {
-        value: store.state['covid_date'],
+        value: store.state['covid_sickness_date'],
         validation: required
       }
     : ''
@@ -128,13 +128,17 @@ if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
 }
 
 watch(
-  () => [store.state['had_covid'], store.state['had_antibody_test'], store.state['covid_date']],
+  () => [
+    store.state['had_covid'],
+    store.state['had_antibody_test'],
+    store.state['covid_sickness_date']
+  ],
   () => {
     const hadCovid = store.state['had_covid']
     const checkAntibodyTest =
       hadCovid && hadCovid !== 'no' ? store.state['had_antibody_test'] : true
     const checkCovidDate =
-      store.state['had_antibody_test'] === false ? store.state['covid_date'] : true
+      store.state['had_antibody_test'] === false ? store.state['covid_sickness_date'] : true
 
     isAvailable.value.show = false
     isAvailable.value.next = false
@@ -147,7 +151,7 @@ watch(
       store.commit('changeValue', { value: '', stateKey: 'had_antibody_test' })
       store.commit('changeValue', { value: '', stateKey: 'test_date' })
       store.commit('changeValue', { value: '', stateKey: 'number' })
-      store.commit('changeValue', { value: '', stateKey: 'covid_date' })
+      store.commit('changeValue', { value: '', stateKey: 'covid_sickness_date' })
     }
 
     if (store.state['had_antibody_test'] === false || store.state['had_antibody_test'] === '') {
@@ -156,7 +160,7 @@ watch(
     }
 
     if (store.state['had_antibody_test'] === true) {
-      store.commit('changeValue', { value: '', stateKey: 'covid_date' })
+      store.commit('changeValue', { value: '', stateKey: 'covid_sickness_date' })
     }
   }
 )

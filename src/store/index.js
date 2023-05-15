@@ -10,11 +10,18 @@ const store = createStore({
       email: localStorageData ? localStorageData['email'] : '',
       had_covid: localStorageData ? localStorageData['had_covid'] : '',
       had_antibody_test:
-        localStorageData['had_covid'] !== 'no' && localStorageData['had_covid'] !== ''
+        localStorageData &&
+        localStorageData['had_covid'] !== 'no' &&
+        localStorageData['had_covid'] !== ''
           ? localStorageData['had_antibody_test'] === 'true'
           : '',
+      covid_sickness_date:
+        localStorageData &&
+        localStorageData['had_covid'] !== 'no' &&
+        localStorageData['had_covid'] !== ''
+          ? localStorageData['covid_sickness_date']
+          : '',
       test_date: localStorageData ? localStorageData['test_date'] : '',
-      covid_date: localStorageData ? localStorageData['covid_date'] : '',
       number: localStorageData ? localStorageData['number'] : '',
       had_vaccine: localStorageData
         ? localStorageData['had_vaccine'] === 'true' && localStorageData['had_vaccine'] !== ''
