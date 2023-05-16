@@ -8,7 +8,7 @@
           type="radio"
           :isImportant="true"
           stateKey="had_covid"
-          :options="firstQuestionOptions"
+          :options="hadCovid"
         />
         <InputWithOptions
           v-if="store.state['had_covid'] !== 'no' && store.state['had_covid']"
@@ -16,7 +16,7 @@
           type="radio"
           :isImportant="true"
           stateKey="had_antibody_test"
-          :options="secondQuestionOptions"
+          :options="hadTest"
         />
         <div v-if="store.state['had_antibody_test'] !== ''">
           <div class="flex flex-col gap-6" v-if="store.state['had_antibody_test'] === true">
@@ -36,7 +36,7 @@
             :isImportant="true"
             placeholder="თარიღი"
             stateKey="covid_sickness_date"
-            :validation="required"
+            validation="required"
           />
         </div>
       </div>
@@ -53,7 +53,8 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import isAvailableValidation from '@/store/isAvailableValidation.js'
-import { required } from '../config/vee-validate/rules.js'
+import { hadCovid, hadTest } from '@/config/questionaries/covid/index.js'
+import { required } from '@/config/vee-validate/rules/customFunctions.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -68,37 +69,6 @@ const isAvailable = ref({
   show: false,
   next: false
 })
-
-const firstQuestionOptions = ref([
-  {
-    id: 1,
-    title: 'კი',
-    storeData: 'yes'
-  },
-  {
-    id: 2,
-    title: 'არა',
-    storeData: 'no'
-  },
-  {
-    id: 3,
-    title: 'ეხლა მაქვს',
-    storeData: 'having_it_now'
-  }
-])
-
-const secondQuestionOptions = ref([
-  {
-    id: 4,
-    title: 'კი',
-    storeData: true
-  },
-  {
-    id: 5,
-    title: 'არა',
-    storeData: false
-  }
-])
 
 const store = useStore()
 

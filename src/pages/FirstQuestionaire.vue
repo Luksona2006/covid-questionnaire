@@ -8,14 +8,14 @@
           :isImportant="true"
           placeholder="იოსებ"
           stateKey="first_name"
-          :validation="validateFirstName"
+          validation="required|minLength:3,სახელი|georgian"
         />
         <TheInput
           title="გვარი"
           :isImportant="true"
           placeholder="ჯუღაშვილი"
           stateKey="last_name"
-          :validation="validateLastName"
+          validation="required|minLength:3,გვარი|georgian"
         />
         <TheInput
           title="მეილი"
@@ -23,7 +23,7 @@
           :isImportant="true"
           placeholder="fbi@redberry.ge"
           stateKey="email"
-          :validation="validateEmail"
+          validation="required|email"
         />
         <TheHint class="mt-18" />
       </div>
@@ -40,7 +40,11 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import isAvailableValidation from '@/store/isAvailableValidation.js'
-import { validateFirstName, validateLastName, validateEmail } from '../config/vee-validate/rules.js'
+import {
+  validateFirstName,
+  validateLastName,
+  validateEmail
+} from '@/config/vee-validate/rules/customFunctions.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'

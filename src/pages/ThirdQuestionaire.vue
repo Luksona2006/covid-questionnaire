@@ -8,7 +8,7 @@
           type="radio"
           :isImportant="true"
           stateKey="had_vaccine"
-          :options="firstQuestionOptions"
+          :options="hadVaccine"
         />
         <InputWithOptions
           v-if="store.state['had_vaccine'] === true"
@@ -16,7 +16,7 @@
           type="radio"
           :isImportant="true"
           stateKey="vaccination_stage"
-          :options="secondQuestionOptions"
+          :options="vaccinationStage"
         />
         <InputWithOptions
           v-if="store.state['had_vaccine'] === false"
@@ -24,16 +24,16 @@
           type="radio"
           :isImportant="true"
           stateKey="vaccination_stage"
-          :options="thirdQuestionOptions"
+          :options="vaccinationStage2"
         />
         <div v-if="store.state['vaccination_stage'] !== ''">
           <p>
-            <span v-show="store.state['vaccination_stage'] === secondQuestionOptions[2].title">
+            <span v-show="store.state['vaccination_stage'] === vaccinationStage[2].title">
               რომ არ გადადო, <br />
               ბარემ ახლავე დარეგისტრირდი <br />
               <br />
             </span>
-            <span v-show="store.state['vaccination_stage'] === thirdQuestionOptions[2].title">
+            <span v-show="store.state['vaccination_stage'] === vaccinationStage2[2].title">
               ახალი პროტოკოლით კოვიდის გადატანიდან 1 <br />
               თვის შემდეგ შეგიძლიათ ვაქცინის გაკეთება. 👉 <br />
               <br />
@@ -56,6 +56,11 @@
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import {
+  hadVaccine,
+  vaccinationStage,
+  vaccinationStage2
+} from '@/config/questionaries/vaccine/index.js'
 import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
@@ -70,55 +75,6 @@ const isAvailable = ref({
   show: false,
   next: false
 })
-
-const firstQuestionOptions = ref([
-  {
-    id: 1,
-    title: 'კი',
-    storeData: true
-  },
-  {
-    id: 2,
-    title: 'არა',
-    storeData: false
-  }
-])
-
-const secondQuestionOptions = ref([
-  {
-    id: 3,
-    title: 'პირველი დოზა და დარეგისტრირებული ვარ მეორეზე',
-    storeData: 'first_dosage_and_registered_on_the_second'
-  },
-  {
-    id: 4,
-    title: 'სრულად აცრილი ვარ',
-    storeData: 'fully_vaccinated'
-  },
-  {
-    id: 5,
-    title: 'პირველი დოზა და არ დავრეგისტრირებულვარ მეორეზე',
-    storeData: 'first_dosage_and_not_registered_on_the_second'
-  }
-])
-
-const thirdQuestionOptions = ref([
-  {
-    id: 6,
-    title: 'დარეგისტრირებული ვარ და ველოდები რიცხვს',
-    storeData: 'registered_and_waiting_for_a_date'
-  },
-  {
-    id: 7,
-    title: 'არ ვგეგმავ',
-    storeData: 'did_not_plan_yet'
-  },
-  {
-    id: 8,
-    title: 'გადატანილი მაქვს და ვგეგმავ აცრას',
-    storeData: 'i_have_been_infected_and_i_plan_to_get_vaccinated'
-  }
-])
 
 const store = useStore()
 
@@ -163,13 +119,13 @@ watch(
 
     if (
       (store.state['had_vaccine'] === true &&
-        (store.state['vaccination_stage'] === thirdQuestionOptions.value[0].storeData ||
-          store.state['vaccination_stage'] === thirdQuestionOptions.value[1].storeData ||
-          store.state['vaccination_stage'] === thirdQuestionOptions.value[2].storeData)) ||
+        (store.state['vaccination_stage'] === vaccinationStage2[0].storeData ||
+          store.state['vaccination_stage'] === vaccinationStage2[1].storeData ||
+          store.state['vaccination_stage'] === vaccinationStage2[2].storeData)) ||
       (store.state['had_vaccine'] === false &&
-        (store.state['vaccination_stage'] === secondQuestionOptions.value[0].storeData ||
-          store.state['vaccination_stage'] === secondQuestionOptions.value[1].storeData ||
-          store.state['vaccination_stage'] === secondQuestionOptions.value[2].storeData))
+        (store.state['vaccination_stage'] === vaccinationStage[0].storeData ||
+          store.state['vaccination_stage'] === vaccinationStage[1].storeData ||
+          store.state['vaccination_stage'] === vaccinationStage[2].storeData))
     ) {
       store.commit('changeValue', { value: '', stateKey: 'vaccination_stage' })
     }
