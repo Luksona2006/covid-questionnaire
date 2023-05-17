@@ -1,7 +1,7 @@
 <template>
   <TheContainer>
     <TheHeader pageNum="1" />
-    <Form @submit.prevent class="grid grid-cols-2 gap-3">
+    <Form @submit.prevent class="grid grid-cols-2 gap-3" v-slot="{ meta }">
       <div class="flex flex-col gap-12 mt-12 pr-36">
         <TheInput
           title="სახელი"
@@ -30,21 +30,14 @@
       <div>
         <img class="w-full" src="@/assets/images/Scan.png" alt="standing-people-with-star-eyes" />
       </div>
-      <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="isAvailable" />
+      <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
     </Form>
   </TheContainer>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { Form } from 'vee-validate'
-import { useStore } from 'vuex'
-import isAvailableValidation from '@/store/isAvailableValidation.js'
-import {
-  validateFirstName,
-  validateLastName,
-  validateEmail
-} from '@/config/vee-validate/rules/customFunctions.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -54,64 +47,4 @@ import Buttons from '@/components/form/Buttons.vue'
 
 const previousRoute = ref('/')
 const nextRoute = ref('second-questionaire')
-
-const isAvailable = ref({
-  show: false,
-  next: false
-})
-
-const store = useStore()
-
-const stateWithValidations = [
-  {
-    value: store.state['first_name'],
-    validation: validateFirstName
-  },
-  {
-    value: store.state['last_name'],
-    validation: validateLastName
-  },
-  {
-    value: store.state.email,
-    validation: validateEmail
-  }
-]
-
-if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
-  isAvailable.value.show = true
-  isAvailable.value.next = false
-  if (isAvailableValidation(stateWithValidations).isValid) {
-    isAvailable.value.next = true
-  }
-}
-
-watch(
-  () => [store.state['first_name'], store.state['last_name'], store.state.email],
-  () => {
-    const stateWithValidations = [
-      {
-        value: store.state['first_name'],
-        validation: validateFirstName
-      },
-      {
-        value: store.state['last_name'],
-        validation: validateLastName
-      },
-      {
-        value: store.state.email,
-        validation: validateEmail
-      }
-    ]
-
-    isAvailable.value.show = false
-    isAvailable.value.next = false
-
-    if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
-      isAvailable.value.show = true
-      if (isAvailableValidation(stateWithValidations).isValid) {
-        isAvailable.value.next = true
-      }
-    }
-  }
-)
 </script>

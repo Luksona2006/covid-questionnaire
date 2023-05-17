@@ -48,7 +48,9 @@ const props = defineProps({
     type: String
   },
   validation: {
-    required: true
+    required: false,
+    type: String,
+    default: ''
   }
 })
 

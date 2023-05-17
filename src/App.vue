@@ -42,6 +42,7 @@ onBeforeMount(() => {
     number: '',
     had_vaccine: '',
     vaccination_stage: '',
+    i_am_waiting: '',
     non_formal_meetings: '',
     number_of_days_from_office: '',
     what_about_meetings_in_live: '',

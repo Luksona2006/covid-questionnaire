@@ -12,12 +12,12 @@ const onlineAttendance = [
   {
     id: 3,
     title: 'ორ კვირაში ერთხელ',
-    storeData: 'once_in_two_weeks'
+    storeData: 'once_in_a_two_weeks'
   },
   {
     id: 4,
     title: 'თვეში ერთხელ',
-    storeData: 'once_a_month'
+    storeData: 'once_in_a_month'
   }
 ]
 

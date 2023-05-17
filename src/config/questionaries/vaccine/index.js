@@ -25,26 +25,26 @@ const vaccinationStage = [
   {
     id: 5,
     title: 'პირველი დოზა და არ დავრეგისტრირებულვარ მეორეზე',
-    storeData: 'first_dosage_and_not_registered_on_the_second'
+    storeData: 'first_dosage_and_not_registered_yet'
   }
 ]
 
-const vaccinationStage2 = [
+const iAmWaiting = [
   {
     id: 6,
     title: 'დარეგისტრირებული ვარ და ველოდები რიცხვს',
-    storeData: 'registered_and_waiting_for_a_date'
+    storeData: 'registered_and_waiting'
   },
   {
     id: 7,
     title: 'არ ვგეგმავ',
-    storeData: 'did_not_plan_yet'
+    storeData: 'not_planning'
   },
   {
     id: 8,
     title: 'გადატანილი მაქვს და ვგეგმავ აცრას',
-    storeData: 'i_have_been_infected_and_i_plan_to_get_vaccinated'
+    storeData: 'had_covid_and_planning_to_be_vaccinated'
   }
 ]
 
-export { hadVaccine, vaccinationStage, vaccinationStage2 }
+export { hadVaccine, vaccinationStage, iAmWaiting }

@@ -1,7 +1,7 @@
 <template>
   <TheContainer>
     <TheHeader pageNum="4" />
-    <Form @submit.prevent class="grid grid-cols-2">
+    <Form @submit.prevent class="grid grid-cols-2" v-slot="{ meta }">
       <div class="flex flex-col gap-12 mt-12 pr-36">
         <p>
           რედბერის მთავარი ღირებულება ჩვენი გუნდის თითოეული წევრია. გარემო, რომელსაც ჩვენი
@@ -33,14 +33,9 @@
           stateKey="tell_us_your_opinion_about_us"
         />
         <div class="ml-auto">
-          <router-link v-if="isAvailable.next" to="/thanks">
-            <button class="bg-[#208298] rounded-[48px] text-white text-lg font-bold py-4 px-7">
-              დასრულება
-            </button>
-          </router-link>
           <button
-            v-if="!isAvailable.next"
             class="bg-[#208298] rounded-[48px] text-white text-lg font-bold py-4 px-7"
+            @click="sendData(meta.valid)"
           >
             დასრულება
           </button>
@@ -49,17 +44,17 @@
       <div>
         <img class="w-full" src="@/assets/images/Bike.png" alt="man-riding-bike" />
       </div>
-      <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="isAvailable" />
+      <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="false" />
     </Form>
   </TheContainer>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Form } from 'vee-validate'
+import { useStore } from 'vuex'
 import { onlineAttendance, workingInOffice } from '@/config/questionaries/job/index.js'
-import isAvailableValidation from '@/store/isAvailableValidation.js'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
@@ -68,54 +63,50 @@ import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheTextarea from '@/components/form/TheTextarea.vue'
 
 const previousRoute = ref('third-questionaire')
-const nextRoute = ref(false)
 
-const isAvailable = ref({
-  show: false,
-  next: false
-})
+const router = useRouter()
 
 const store = useStore()
+function sendData(valid) {
+  const data = JSON.parse(localStorage.getItem('data'))
+  const filteredKeys = Object.keys(data).filter((key) => data[key] !== '')
+  const filteredKeyValuePairs = filteredKeys.map((key) => [key, store.state[key]])
+  const filteredData = Object.fromEntries(filteredKeyValuePairs)
 
-const stateWithValidations = [
-  {
-    value: store.state['non_formal_meetings']
-  },
-  {
-    value: store.state['number_of_days_from_office']
-  }
-]
-
-if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
-  isAvailable.value.show = true
-  isAvailable.value.next = false
-  if (isAvailableValidation(stateWithValidations).isValid) {
-    isAvailable.value.next = true
-  }
-}
-
-watch(
-  () => [store.state['non_formal_meetings'], store.state['number_of_days_from_office']],
-  () => {
-    const stateWithValidations = [
-      {
-        value: store.state['non_formal_meetings']
-      },
-      {
-        value: store.state['number_of_days_from_office']
-      }
-    ]
-
-    isAvailable.value.show = false
-    isAvailable.value.next = false
-
-    if (!isAvailableValidation(stateWithValidations).isAnyEmpty) {
-      isAvailable.value.show = true
-      isAvailable.value.next = false
-      if (isAvailableValidation(stateWithValidations).isValid) {
-        isAvailable.value.next = true
-      }
+  if (filteredData['number']) {
+    filteredData['antibodies'] = {
+      number: store.state['number']
     }
   }
-)
+
+  if (filteredData['test_date']) {
+    filteredData['antibodies'] = {
+      number: store.state['test_date']
+    }
+  }
+
+  if (filteredData['test_date'] && filteredData['number']) {
+    filteredData['antibodies'] = {
+      test_date: store.state['test_date'],
+      number: store.state['number']
+    }
+  }
+  if (valid) {
+    fetch('https://covid19.devtest.ge/api/create', {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(filteredData)
+    }).then((response) => {
+      if (response.status === 201) {
+        router.push('/thanks')
+        // localStorage.removeItem('data')
+      } else {
+        throw Error('Something went wrong! :()')
+      }
+    })
+  }
+}
 </script>
