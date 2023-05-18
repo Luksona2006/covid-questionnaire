@@ -1,8 +1,8 @@
 <template>
   <TheContainer>
     <TheHeader pageNum="4" />
-    <Form @submit.prevent class="grid grid-cols-2" v-slot="{ meta }">
-      <div class="flex flex-col gap-12 mt-12 pr-36">
+    <Form @submit.prevent class="grid grid-cols-2 mt-12" v-slot="{ meta }">
+      <div class="flex flex-col gap-12 pr-36">
         <p>
           რედბერის მთავარი ღირებულება ჩვენი გუნდის თითოეული წევრია. გარემო, რომელსაც ჩვენი
           თანამშრომლები ქმნით, ბევრისთვის არის და ყოფილა წლების განმავლობაში მიზნებისთვის ერთად
@@ -32,7 +32,7 @@
           title="რას ფიქრობ არსებულ გარემოზე: რა მოგწონს, რას დაამატებდი, რას შეცვლიდი?"
           stateKey="tell_us_your_opinion_about_us"
         />
-        <div class="ml-auto">
+        <div class="ml-auto mb-16">
           <button
             class="bg-[#208298] rounded-[48px] text-white text-lg font-bold py-4 px-7"
             @click="sendData(meta.valid)"
@@ -41,9 +41,13 @@
           </button>
         </div>
       </div>
-      <div>
-        <img class="w-full" src="@/assets/images/Bike.png" alt="man-riding-bike" />
-      </div>
+      <TheImageContainer
+        mainSrc="@/assets/images/Bike.png"
+        hoverSrc="@/assets/images/Heart.png"
+        mainAlt="man-riding-bike"
+        hover-alt="pink-heart"
+        styles="left-[98px] top-[72px]"
+      />
       <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="false" />
     </Form>
   </TheContainer>
@@ -55,6 +59,7 @@ import { useRouter } from 'vue-router'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import { onlineAttendance, workingInOffice } from '@/config/questionaries/job/index.js'
+import TheImageContainer from '../components/TheImageContainer.vue'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'

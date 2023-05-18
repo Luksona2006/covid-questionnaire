@@ -12,7 +12,7 @@ const hadCovid = [
   {
     id: 3,
     title: 'ეხლა მაქვს',
-    storeData: 'having_it_now'
+    storeData: 'have_right_now'
   }
 ]
 

@@ -1,8 +1,8 @@
 <template>
   <TheContainer>
     <TheHeader pageNum="2" />
-    <Form @submit.prevent class="grid grid-cols-2 gap-3" v-slot="{ meta }">
-      <div class="flex flex-col gap-12 mt-12 pr-36">
+    <Form @submit.prevent class="grid grid-cols-2 gap-3 mt-12" v-slot="{ meta }">
+      <div class="flex flex-col gap-12 pr-36">
         <InputWithOptions
           title="გაქვს გადატანილი Covid-19?"
           type="radio"
@@ -42,9 +42,13 @@
           />
         </div>
       </div>
-      <div>
-        <img class="w-full" src="@/assets/images/Vaccinate.png" alt="ill-man" />
-      </div>
+      <TheImageContainer
+        mainSrc="@/assets/images/Vaccinate.png"
+        hoverSrc="@/assets/images/RedCircle.png"
+        mainAlt="ill-man"
+        hover-alt="red-circle"
+        styles="left-5 top-44"
+      />
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
     </Form>
   </TheContainer>
@@ -52,9 +56,10 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
-import { Form, ErrorMessage, Field } from 'vee-validate'
+import { Form } from 'vee-validate'
 import { hadCovid, hadTest } from '@/config/questionaries/covid/index.js'
 import { useStore } from 'vuex'
+import TheImageContainer from '../components/TheImageContainer.vue'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
