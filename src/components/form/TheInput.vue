@@ -8,7 +8,7 @@
       :name="stateKey"
       :type="type"
       :placeholder="placeholder"
-      :value="modelValue"
+      :value="store.state[stateKey]"
       @input="changeValue($event.target.value)"
       :rules="validation"
       class="border-[0.8px] border-[#232323] py-3 px-5 outline-none w-full"
@@ -43,16 +43,14 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  modelValue: {
-    required: true,
-    type: String || Number
-  },
   stateKey: {
     required: true,
     type: String
   },
   validation: {
-    required: true
+    required: false,
+    type: String,
+    default: ''
   }
 })
 
@@ -62,16 +60,9 @@ const marked = computed(function () {
 
 const labelTitle = props.title + '' + marked.value
 
-const hasOptions = computed(function () {
-  return props.options.length > 0 ? true : false
-})
-
-const emits = defineEmits(['update:modelValue'])
-
 const store = useStore()
 
 function changeValue(value) {
-  emits('update:modelValue', value)
   store.commit('changeValue', { value, stateKey: props.stateKey })
 }
 </script>

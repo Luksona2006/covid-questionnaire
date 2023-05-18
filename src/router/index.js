@@ -4,6 +4,7 @@ import FirstQuestionarie from '@/pages/FirstQuestionaire.vue'
 import SecondQuestionaire from '@/pages/SecondQuestionaire.vue'
 import ThirdQuestionaire from '@/pages/ThirdQuestionaire.vue'
 import FourthQuestionaire from '@/pages/FourthQuestionaire.vue'
+import Thanks from '@/pages/Thanks.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/fourth-questionaire',
     name: 'fourth-questionaire',
     component: FourthQuestionaire
+  },
+  {
+    path: '/thanks',
+    name: 'thanks',
+    component: Thanks
   }
 ]
 

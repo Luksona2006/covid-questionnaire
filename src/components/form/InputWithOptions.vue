@@ -3,28 +3,30 @@
     <label :for="stateKey" class="text-2xl mb-2">
       {{ labelTitle }}
     </label>
-    <div v-for="option in options" class="flex gap-2 items-center ml-2">
-      <Field
-        :name="stateKey"
-        :type="type"
-        :key="option.id"
-        :id="option.id"
-        :value="option.title"
-        :storeData="option.storeData"
-        @input="changeValue($event.target.value, option.storeData)"
-        :rules="validation"
-        class="border-[0.8px] border-[#232323] py-3 px-5 outline-none w-fit"
-      />
-      <label :for="option.id" class="text-xl w-max">
-        {{ option.title }}
-      </label>
-    </div>
+    <Field :name="stateKey" :value="storeValue" :rules="inputValidation">
+      <div v-for="option in options" class="flex gap-2 items-center ml-2">
+        <input
+          :type="type"
+          :value="option.storeData"
+          :name="stateKey"
+          :key="option.id"
+          :id="option.id"
+          @input="changeValue($event.target.value)"
+          class="border-[0.8px] border-[#232323] py-3 px-5 outline-none w-fit"
+          :checked="option.storeData === store.state[stateKey] ? true : false"
+        />
+        <label :for="option.id" class="text-xl w-max">
+          {{ option.title }}
+        </label>
+      </div>
+    </Field>
+    <ErrorMessage :name="stateKey" class="text-[#F15524]" />
   </div>
 </template>
 
 <script setup>
-import { Field } from 'vee-validate'
-import { computed } from 'vue'
+import { ErrorMessage, Field } from 'vee-validate'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
 const props = defineProps({
@@ -48,16 +50,14 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  modelValue: {
-    required: true,
-    type: String || Number
-  },
   stateKey: {
     required: true,
     type: String
   },
   validation: {
-    required: true
+    required: false,
+    type: String,
+    default: ''
   },
   options: {
     required: true,
@@ -71,12 +71,14 @@ const marked = computed(function () {
 
 const labelTitle = props.title + '' + marked.value
 
-const emits = defineEmits(['update:modelValue'])
-
 const store = useStore()
 
-function changeValue(value, storeData) {
-  emits('update:modelValue', value)
-  store.commit('changeValue', { value: storeData, stateKey: props.stateKey })
+const storeValue = ref(store.state[props.stateKey])
+const inputValidation = ref(props.validation)
+
+function changeValue(value) {
+  store.commit('changeValue', { value, stateKey: props.stateKey })
+  storeValue.value = store.state[props.stateKey]
+  inputValidation.value = ''
 }
 </script>

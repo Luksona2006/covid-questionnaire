@@ -3,9 +3,8 @@
     <router-link :to="previousRoute" class="cursor-pointer">
       <arrowLeft />
     </router-link>
-
-    <button v-if="hasNextPage" :class="cursorOnButton" :disabled="!isAvailable.show">
-      <arrowRight v-if="!isAvailable.next" :stroke="strokeColor" />
+    <button v-if="hasNextPage" :class="cursorOnButton" :disabled="!isAvailable">
+      <arrowRight v-if="!isAvailable" :stroke="strokeColor" />
       <router-link v-else :to="nextRoute">
         <arrowRight :stroke="strokeColor" />
       </router-link>
@@ -19,7 +18,8 @@ import arrowLeft from '@/assets/icons/arrowLeft.vue'
 import arrowRight from '@/assets/icons/arrowRight.vue'
 const props = defineProps({
   isAvailable: {
-    required: true
+    required: true,
+    type: Boolean
   },
   previousRoute: {
     required: false,
@@ -38,7 +38,7 @@ const props = defineProps({
   }
 })
 
-const strokeColor = computed(() => (props.isAvailable.show ? '#232323' : '#8D8D8D'))
+const strokeColor = computed(() => (props.isAvailable ? '#232323' : '#8D8D8D'))
 const cursorOnButton = computed(() =>
   props.isAvailable.show ? 'cursor-pointer' : 'cursor-default'
 )
