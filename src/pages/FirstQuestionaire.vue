@@ -48,7 +48,7 @@ import TheContainer from '@/components/TheContainer.vue'
 import TheInput from '@/components/form/TheInput.vue'
 import TheHint from '@/components/TheHint.vue'
 import Buttons from '@/components/form/Buttons.vue'
-import TheImageContainer from '../components/TheImageContainer.vue'
+import TheImageContainer from '@/components/TheImageContainer.vue'
 
 const previousRoute = ref('/')
 const nextRoute = ref('second-questionaire')

@@ -64,7 +64,7 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import { hadVaccine, vaccinationStage, iAmWaiting } from '@/config/questionaries/vaccine/index.js'
-import TheImageContainer from '../components/TheImageContainer.vue'
+import TheImageContainer from '@/components/TheImageContainer.vue'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'

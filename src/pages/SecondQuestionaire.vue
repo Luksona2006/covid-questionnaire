@@ -59,7 +59,7 @@ import { ref, watch, computed } from 'vue'
 import { Form } from 'vee-validate'
 import { hadCovid, hadTest } from '@/config/questionaries/covid/index.js'
 import { useStore } from 'vuex'
-import TheImageContainer from '../components/TheImageContainer.vue'
+import TheImageContainer from '@/components/TheImageContainer.vue'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
