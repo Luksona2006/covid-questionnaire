@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-14 mt-10 mx-auto col-span-2">
+  <div class="flex gap-14 mx-auto col-span-2">
     <router-link :to="previousRoute" class="cursor-pointer">
       <arrowLeft />
     </router-link>

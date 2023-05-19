@@ -1,8 +1,8 @@
 <template>
   <TheContainer>
     <TheHeader pageNum="3" />
-    <Form @submit.prevent class="grid grid-cols-2 gap-3" v-slot="{ meta }">
-      <div class="flex flex-col gap-12 mt-12 pr-36">
+    <Form @submit.prevent class="grid grid-cols-2 gap-3 mt-10" v-slot="{ meta }">
+      <div class="flex flex-col gap-12 pr-36">
         <InputWithOptions
           title="უკვე აცრილი ხარ?"
           type="radio"
@@ -47,9 +47,13 @@
           </p>
         </div>
       </div>
-      <div>
-        <img class="w-full" src="@/assets/images/Doctor.png" alt="doctor" />
-      </div>
+      <TheImageContainer
+        mainSrc="@/assets/images/Doctor.png"
+        hoverSrc="@/assets/images/YellowStar.png"
+        mainAlt="yellow-star"
+        hover-alt="red-circle"
+        styles="left-5 -top-7"
+      />
       <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
     </Form>
   </TheContainer>
@@ -60,6 +64,7 @@ import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import { hadVaccine, vaccinationStage, iAmWaiting } from '@/config/questionaries/vaccine/index.js'
+import TheImageContainer from '@/components/TheImageContainer.vue'
 
 import TheHeader from '@/components/TheHeader.vue'
 import TheContainer from '@/components/TheContainer.vue'
