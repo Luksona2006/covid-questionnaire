@@ -14,8 +14,8 @@
 
 <script setup>
 import { computed } from 'vue'
-import arrowLeftIcon from '@/assets/icons/arrowLeftIcon.vue'
-import arrowRightIcon from '@/assets/icons/arrowRightIcon.vue'
+import arrowLeftIcon from '@/assets/icons/ArrowLeftIcon.vue'
+import arrowRightIcon from '@/assets/icons/ArrowRightIcon.vue'
 const props = defineProps({
   isAvailable: {
     required: true,

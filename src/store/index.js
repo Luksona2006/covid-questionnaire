@@ -24,7 +24,10 @@ const store = createStore({
       vaccination_stage: localStorageData?.['vaccination_stage'] ?? '',
       i_am_waiting: localStorageData?.['i_am_waiting'] ?? '',
       non_formal_meetings: localStorageData?.['non_formal_meetings'] ?? '',
-      number_of_days_from_office: +localStorageData?.['number_of_days_from_office'] ?? '',
+      number_of_days_from_office:
+        localStorageData && localStorageData['number_of_days_from_office'] !== ''
+          ? +localStorageData['number_of_days_from_office']
+          : '',
       what_about_meetings_in_live: localStorageData?.['what_about_meetings_in_live'] ?? '',
       tell_us_your_opinion_about_us: localStorageData?.['tell_us_your_opinion_about_us'] ?? ''
     }
