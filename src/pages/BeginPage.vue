@@ -4,7 +4,7 @@
   >
     <div>
       <transition name="logo" @after-enter="animateText">
-        <img v-if="logoAnimate" src="@/assets/images/MainLogo.png" alt="redberry-logo" />
+        <img v-if="logoAnimate" src="@/assets/images/MainLogo.png" alt="redberry" />
       </transition>
     </div>
     <div class="relative w-fit min-h-[72px]">
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { Transition, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const logoAnimate = ref(false)
 const textAnimate = ref(false)
@@ -76,9 +76,20 @@ function hideText() {
   transform: scale(1);
 }
 .logo-enter-active {
-  transition: 0.5s all ease-in;
+  transition: 0.3s all;
 }
 
+.logo-leave-from {
+  transform: translate(0) scale(1);
+}
+
+.logo-leave-active {
+  transition: 0.5s all;
+}
+
+.logo-leave-to {
+  transform: translate(100px, 8px) scale(0.7);
+}
 .text-enter-from {
   opacity: 0;
   transform: translateY(-60px);

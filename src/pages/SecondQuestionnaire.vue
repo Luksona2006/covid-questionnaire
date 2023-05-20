@@ -1,71 +1,81 @@
 <template>
-  <TheContainer>
-    <TheHeader pageNum="2" />
+  <the-container>
+    <the-header page-num="2" />
     <Form @submit.prevent class="grid grid-cols-2 gap-3 mt-12" v-slot="{ meta }">
       <div class="flex flex-col gap-12 pr-36">
-        <InputWithOptions
+        <input-with-options
           title="გაქვს გადატანილი Covid-19?"
           type="radio"
-          :isImportant="true"
-          stateKey="had_covid"
+          :is-important="true"
+          state-key="had_covid"
           validation="required"
           :options="hadCovid"
         />
-        <InputWithOptions
+        <input-with-options
           v-if="personHadCovid"
           title="ანტისხეულების ტესტი გაქვს გაკეთებული?"
           type="radio"
-          :isImportant="true"
-          stateKey="had_antibody_test"
+          :is-important="true"
+          state-key="had_antibody_test"
           validation="required"
           :options="hadTest"
         />
         <div v-if="store.state['had_antibody_test'] !== ''">
           <div class="flex flex-col gap-6" v-if="personHadAntibodyTest">
-            <TheInput
+            <the-input
               title="თუ გახსოვს, გთხოვ მიუთითე ტესტის მიახლოებითი რიცხვი და ანტისხეულების რაოდენობა"
               type="date"
               placeholder="თარიღი"
-              stateKey="test_date"
+              state-key="test_date"
             />
 
-            <TheInput placeholder="ანტისხეულების რაოდენობა" stateKey="number" />
+            <the-input placeholder="ანტისხეულების რაოდენობა" state-key="number" />
           </div>
-          <TheInput
+          <the-input
             v-else
             title="მიუთითე მიახლოებითი პერიოდი (დღე/თვე/წელი) როდის გქონდა Covid-19"
             type="date"
-            :isImportant="true"
+            :is-important="true"
             placeholder="თარიღი"
-            stateKey="covid_sickness_date"
+            state-key="covid_sickness_date"
             validation="required"
           />
         </div>
       </div>
-      <TheImageContainer
-        mainSrc="@/assets/images/Vaccinate.png"
-        hoverSrc="@/assets/images/RedCircle.png"
-        mainAlt="ill-man"
+      <the-image-container
+        main-src="@/assets/images/Vaccinate.png"
+        hover-src="@/assets/images/RedCircle.png"
+        main-alt="ill-man"
         hover-alt="red-circle"
         styles="left-5 top-44"
+        :image-enter-from="imageEnterFrom"
+        :image-enter-to="imageEnterTo"
+        :image-leave-from="imageLeaveFrom"
+        :image-leave-to="imageLeaveTo"
       />
-      <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
+      <navigation-buttons
+        :previous-route="previousRoute"
+        :next-route="nextRoute"
+        :is-available="meta.valid"
+      />
     </Form>
-  </TheContainer>
+  </the-container>
 </template>
 
 <script setup>
 import { ref, watch, computed } from 'vue'
 import { Form } from 'vee-validate'
-import { hadCovid, hadTest } from '@/config/questionaries/covid/index.js'
+import { hadCovid, hadTest } from '@/config/questionnaires/covid/index.js'
 import { useStore } from 'vuex'
-import TheImageContainer from '@/components/TheImageContainer.vue'
 
-import TheHeader from '@/components/TheHeader.vue'
-import TheContainer from '@/components/TheContainer.vue'
-import Buttons from '@/components/form/Buttons.vue'
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheInput from '@/components/form/TheInput.vue'
+import {
+  imageEnterFrom,
+  imageEnterTo,
+  imageLeaveFrom,
+  imageLeaveTo
+} from '@/config/animations/secondQuestionnaire.js'
 
 const previousRoute = ref('first-questionaire')
 const nextRoute = ref('third-questionaire')
