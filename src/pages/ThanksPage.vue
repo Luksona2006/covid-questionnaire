@@ -4,7 +4,7 @@
       <transition name="big-star">
         <img
           v-if="showStars"
-          src="@/assets/images/Star.png"
+          src="@/assets/images/StarImage.png"
           alt="white-star"
           class="absolute left-6 -top-16"
         />
@@ -12,7 +12,7 @@
       <transition name="small-star">
         <img
           v-if="showStars"
-          src="@/assets/images/Star.png"
+          src="@/assets/images/StarImage.png"
           alt="white-star"
           class="absolute right-9 -bottom-9 w-8"
         />

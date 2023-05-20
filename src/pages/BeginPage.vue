@@ -4,7 +4,7 @@
   >
     <div>
       <transition name="logo" @after-enter="animateText">
-        <img v-if="logoAnimate" src="@/assets/images/MainLogo.png" alt="redberry" />
+        <img v-if="logoAnimate" src="@/assets/images/MainLogoImage.png" alt="redberry" />
       </transition>
     </div>
     <div class="relative w-fit min-h-[72px]">

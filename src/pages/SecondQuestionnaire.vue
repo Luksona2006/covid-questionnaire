@@ -43,8 +43,8 @@
         </div>
       </div>
       <the-image-container
-        main-src="@/assets/images/Vaccinate.png"
-        hover-src="@/assets/images/RedCircle.png"
+        main-src="@/assets/images/VaccinateImage.png"
+        hover-src="@/assets/images/RedCircleImage.png"
         main-alt="ill-man"
         hover-alt="red-circle"
         styles="left-5 top-44"

@@ -1,12 +1,12 @@
 <template>
   <div class="flex gap-14 mx-auto col-span-2">
     <router-link :to="previousRoute" class="cursor-pointer">
-      <arrowLeft />
+      <arrow-left-icon />
     </router-link>
     <button v-if="hasNextPage" :class="cursorOnButton" :disabled="!isAvailable">
-      <arrowRight v-if="!isAvailable" :stroke="strokeColor" />
+      <arrow-right-icon v-if="!isAvailable" :stroke="strokeColor" />
       <router-link v-else :to="nextRoute">
-        <arrowRight :stroke="strokeColor" />
+        <arrow-right-icon :stroke="strokeColor" />
       </router-link>
     </button>
   </div>
@@ -14,8 +14,8 @@
 
 <script setup>
 import { computed } from 'vue'
-import arrowLeft from '@/assets/icons/arrowLeft.vue'
-import arrowRight from '@/assets/icons/arrowRight.vue'
+import arrowLeftIcon from '@/assets/icons/arrowLeftIcon.vue'
+import arrowRightIcon from '@/assets/icons/arrowRightIcon.vue'
 const props = defineProps({
   isAvailable: {
     required: true,

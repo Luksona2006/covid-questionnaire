@@ -1,7 +1,7 @@
 <template>
   <header class="flex justify-between items-center py-6 border-b-2 border-b-[#232323]">
     <div>
-      <img src="@/assets/images/SecondLogo.png" alt="redberry" />
+      <img src="@/assets/images/SecondLogoImage.png" alt="redberry" />
     </div>
     <div>
       <h2 class="text-[40px] font-bold font-[anonymousBold]">{{ pageNum }}/4</h2>

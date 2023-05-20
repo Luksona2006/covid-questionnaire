@@ -42,8 +42,8 @@
         </div>
       </div>
       <the-image-container
-        mainSrc="@/assets/images/Bike.png"
-        hoverSrc="@/assets/images/Heart.png"
+        mainSrc="@/assets/images/BikeImage.png"
+        hoverSrc="@/assets/images/HeartImage.png"
         mainAlt="man-riding-bike"
         hover-alt="pink-heart"
         styles="left-[98px] top-[72px]"
@@ -116,7 +116,7 @@ function sendData(valid) {
     }).then((response) => {
       if (response.status === 201) {
         router.push('/thanks')
-        // localStorage.removeItem('data')
+        localStorage.removeItem('data')
       } else {
         throw Error('Something went wrong! :()')
       }
