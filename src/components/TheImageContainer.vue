@@ -1,8 +1,8 @@
 <template>
   <div class="relative">
-    <img class="w-full" :src="mainSrcFixed" :alt="mainAlt" />
+    <img class="w-full" :src="getImage(mainImageName)" :alt="mainAlt" />
     <transition name="image">
-      <img v-if="animation" :class="styles" :src="hoverSrcFixed" :alt="hoverAlt" />
+      <img v-if="animation" :class="styles" :src="getImage(hoverImageName)" :alt="hoverAlt" />
     </transition>
   </div>
 </template>
@@ -26,11 +26,11 @@ const props = defineProps({
     type: String,
     default: 'image'
   },
-  mainSrc: {
+  mainImageName: {
     required: true,
     type: String
   },
-  hoverSrc: {
+  hoverImageName: {
     required: true,
     type: String
   },
@@ -81,12 +81,13 @@ const styleSheetNames = () => {
 styleSheetNames()
 
 const styles = ref('absolute -z-10')
-const mainSrcFixed = ref(props.mainSrc)
-const hoverSrcFixed = ref(props.hoverSrc)
 
 styles.value = styles.value + ' ' + props.styles
-mainSrcFixed.value = mainSrcFixed.value.replace('@', '/src')
-hoverSrcFixed.value = hoverSrcFixed.value.replace('@', '/src')
+
+function getImage(name) {
+  const url = new URL(`../assets/images/${name}.png`, import.meta.url).href
+  return url
+}
 </script>
 
 <style scoped>

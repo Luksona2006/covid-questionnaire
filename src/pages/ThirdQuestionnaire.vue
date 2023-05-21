@@ -48,8 +48,8 @@
         </div>
       </div>
       <the-image-container
-        main-src="@/assets/images/DoctorImage.png"
-        hover-src="@/assets/images/YellowStarImage.png"
+        main-image-name="DoctorImage"
+        hover-image-name="YellowStarImage"
         main-alt="yellow-star"
         hover-alt="red-circle"
         styles="left-5 -top-7"
