@@ -42,9 +42,9 @@
         </div>
       </div>
       <the-image-container
-        mainSrc="@/assets/images/BikeImage.png"
-        hoverSrc="@/assets/images/HeartImage.png"
-        mainAlt="man-riding-bike"
+        main-image-name="BikeImage"
+        hover-image-name="HeartImage"
+        main-alt="man-riding-bike"
         hover-alt="pink-heart"
         styles="left-[98px] top-[72px]"
         :image-enter-from="imageEnterFrom"
@@ -53,9 +53,9 @@
         :image-leave-to="imageLeaveTo"
       />
       <navigation-buttons
-        :hasNextPage="false"
-        :previousRoute="previousRoute"
-        :isAvailable="false"
+        :has-next-page="false"
+        :previous-route="previousRoute"
+        :is-available="false"
       />
     </Form>
   </the-container>

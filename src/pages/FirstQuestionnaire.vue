@@ -28,8 +28,8 @@
         <the-hint class="mt-18" />
       </div>
       <the-image-container
-        main-src="@/assets/images/ScanImage.png"
-        hover-src="@/assets/images/YellowRectangleImage.png"
+        main-image-name="ScanImage"
+        hover-image-name="YellowRectangleImage"
         main-alt="standing-people-with-star-eyes"
         hover-alt="yellow-rectangle"
         styles="left-20 top-44 h-[72px] w-[622px]"
