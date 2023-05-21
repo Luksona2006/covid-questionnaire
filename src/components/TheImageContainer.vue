@@ -58,8 +58,13 @@ onBeforeRouteLeave(() => {
   animation.value = false
 })
 
+const styleSheetIndex = [...document.styleSheets]
+  .map((styleSheet) =>
+    [...styleSheet.cssRules].filter((el) => el.cssText.split('[')[0] === '.image-enter-from')
+  )
+  .findIndex((el) => el.length > 0)
 const styleSheetNames = () => {
-  ;[...document.styleSheets[2].cssRules].map((rule) => {
+  ;[...document.styleSheets[styleSheetIndex].cssRules].map((rule) => {
     if (rule.selectorText.split('[')[0] === '.image-enter-from') {
       props.imageEnterFrom.map((style) => rule.style.setProperty(style.key, style.value))
     }
