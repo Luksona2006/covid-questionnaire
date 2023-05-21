@@ -1,41 +1,41 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import Begin from '@/pages/Begin.vue'
-import FirstQuestionarie from '@/pages/FirstQuestionaire.vue'
-import SecondQuestionaire from '@/pages/SecondQuestionaire.vue'
-import ThirdQuestionaire from '@/pages/ThirdQuestionaire.vue'
-import FourthQuestionaire from '@/pages/FourthQuestionaire.vue'
-import Thanks from '@/pages/Thanks.vue'
+import BeginPage from '@/pages/BeginPage.vue'
+import FirstQuestionnarie from '@/pages/FirstQuestionnaire.vue'
+import SecondQuestionnaire from '@/pages/SecondQuestionnaire.vue'
+import ThirdQuestionnaire from '@/pages/ThirdQuestionnaire.vue'
+import FourthQuestionnaire from '@/pages/FourthQuestionnaire.vue'
+import ThanksPage from '@/pages/ThanksPage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'begin',
-    component: Begin
+    component: BeginPage
   },
   {
     path: '/first-questionaire',
     name: 'first-questionaire',
-    component: FirstQuestionarie
+    component: FirstQuestionnarie
   },
   {
     path: '/second-questionaire',
     name: 'second-questionaire',
-    component: SecondQuestionaire
+    component: SecondQuestionnaire
   },
   {
     path: '/third-questionaire',
     name: 'third-questionaire',
-    component: ThirdQuestionaire
+    component: ThirdQuestionnaire
   },
   {
     path: '/fourth-questionaire',
     name: 'fourth-questionaire',
-    component: FourthQuestionaire
+    component: FourthQuestionnaire
   },
   {
     path: '/thanks',
     name: 'thanks',
-    component: Thanks
+    component: ThanksPage
   }
 ]
 

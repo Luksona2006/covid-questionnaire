@@ -1,6 +1,6 @@
 <template>
-  <TheContainer>
-    <TheHeader pageNum="4" />
+  <the-container>
+    <the-header pageNum="4" />
     <Form @submit.prevent class="grid grid-cols-2 mt-12" v-slot="{ meta }">
       <div class="flex flex-col gap-12 pr-36">
         <p>
@@ -10,25 +10,25 @@
           პანდემიის პერიოდში ერთმანეთსაც იშვიათად ვნახულობთ პირისპირ და ყოველდღიური კომუნიკაციაც
           გაიშვიათდა.
         </p>
-        <InputWithOptions
+        <input-with-options
           title="რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ ჩაერთვება?"
           type="radio"
           :isImportant="true"
           stateKey="non_formal_meetings"
           :options="onlineAttendance"
         />
-        <InputWithOptions
+        <input-with-options
           title="კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?"
           type="radio"
           :isImportant="true"
           stateKey="number_of_days_from_office"
           :options="workingInOffice"
         />
-        <TheTextarea
+        <the-textarea
           title="რას ფიქრობ ფიზიკურ შეკრებებზე?"
           stateKey="what_about_meetings_in_live"
         />
-        <TheTextarea
+        <the-textarea
           title="რას ფიქრობ არსებულ გარემოზე: რა მოგწონს, რას დაამატებდი, რას შეცვლიდი?"
           stateKey="tell_us_your_opinion_about_us"
         />
@@ -41,16 +41,24 @@
           </button>
         </div>
       </div>
-      <TheImageContainer
-        mainSrc="@/assets/images/Bike.png"
-        hoverSrc="@/assets/images/Heart.png"
+      <the-image-container
+        mainSrc="@/assets/images/BikeImage.png"
+        hoverSrc="@/assets/images/HeartImage.png"
         mainAlt="man-riding-bike"
         hover-alt="pink-heart"
         styles="left-[98px] top-[72px]"
+        :image-enter-from="imageEnterFrom"
+        :image-enter-to="imageEnterTo"
+        :image-leave-from="imageLeaveFrom"
+        :image-leave-to="imageLeaveTo"
       />
-      <Buttons :hasNextPage="false" :previousRoute="previousRoute" :isAvailable="false" />
+      <navigation-buttons
+        :hasNextPage="false"
+        :previousRoute="previousRoute"
+        :isAvailable="false"
+      />
     </Form>
-  </TheContainer>
+  </the-container>
 </template>
 
 <script setup>
@@ -58,12 +66,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
-import { onlineAttendance, workingInOffice } from '@/config/questionaries/job/index.js'
-import TheImageContainer from '@/components/TheImageContainer.vue'
+import { onlineAttendance, workingInOffice } from '@/config/questionnaires/job/index.js'
+import {
+  imageEnterFrom,
+  imageEnterTo,
+  imageLeaveFrom,
+  imageLeaveTo
+} from '@/config/animations/fourthQuestionnaire.js'
 
-import TheHeader from '@/components/TheHeader.vue'
-import TheContainer from '@/components/TheContainer.vue'
-import Buttons from '@/components/form/Buttons.vue'
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheTextarea from '@/components/form/TheTextarea.vue'
 
@@ -100,14 +110,13 @@ function sendData(valid) {
     fetch('https://covid19.devtest.ge/api/create', {
       method: 'POST',
       headers: {
-        accept: 'application/json',
         'Content-type': 'application/json'
       },
       body: JSON.stringify(filteredData)
     }).then((response) => {
       if (response.status === 201) {
         router.push('/thanks')
-        // localStorage.removeItem('data')
+        localStorage.removeItem('data')
       } else {
         throw Error('Something went wrong! :()')
       }

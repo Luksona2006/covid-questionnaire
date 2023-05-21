@@ -1,31 +1,31 @@
 <template>
-  <TheContainer>
-    <TheHeader pageNum="3" />
+  <the-container>
+    <the-header pageNum="3" />
     <Form @submit.prevent class="grid grid-cols-2 gap-3 mt-10" v-slot="{ meta }">
       <div class="flex flex-col gap-12 pr-36">
-        <InputWithOptions
+        <input-with-options
           title="უკვე აცრილი ხარ?"
           type="radio"
-          :isImportant="true"
-          stateKey="had_vaccine"
+          :is-important="true"
+          state-key="had_vaccine"
           validation="required"
           :options="hadVaccine"
         />
-        <InputWithOptions
+        <input-with-options
           v-if="store.state['had_vaccine'] === true"
           title="აირჩიე რა ეტაპზე ხარ"
           type="radio"
-          :isImportant="true"
-          stateKey="vaccination_stage"
+          :is-important="true"
+          state-key="vaccination_stage"
           validation="required"
           :options="vaccinationStage"
         />
-        <InputWithOptions
+        <input-with-options
           v-if="store.state['had_vaccine'] === false"
           title="რას ელოდები?"
           type="radio"
-          :isImportant="true"
-          stateKey="i_am_waiting"
+          :is-important="true"
+          state-key="i_am_waiting"
           validation="required"
           :options="iAmWaiting"
         />
@@ -47,29 +47,39 @@
           </p>
         </div>
       </div>
-      <TheImageContainer
-        mainSrc="@/assets/images/Doctor.png"
-        hoverSrc="@/assets/images/YellowStar.png"
-        mainAlt="yellow-star"
+      <the-image-container
+        main-src="@/assets/images/DoctorImage.png"
+        hover-src="@/assets/images/YellowStarImage.png"
+        main-alt="yellow-star"
         hover-alt="red-circle"
         styles="left-5 -top-7"
+        :image-enter-from="imageEnterFrom"
+        :image-enter-to="imageEnterTo"
+        :image-leave-from="imageLeaveFrom"
+        :image-leave-to="imageLeaveTo"
       />
-      <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
+      <navigation-buttons
+        :previous-route="previousRoute"
+        :next-route="nextRoute"
+        :is-available="meta.valid"
+      />
     </Form>
-  </TheContainer>
+  </the-container>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
-import { hadVaccine, vaccinationStage, iAmWaiting } from '@/config/questionaries/vaccine/index.js'
-import TheImageContainer from '@/components/TheImageContainer.vue'
+import { hadVaccine, vaccinationStage, iAmWaiting } from '@/config/questionnaires/vaccine/index.js'
 
-import TheHeader from '@/components/TheHeader.vue'
-import TheContainer from '@/components/TheContainer.vue'
-import Buttons from '@/components/form/Buttons.vue'
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
+import {
+  imageEnterFrom,
+  imageEnterTo,
+  imageLeaveFrom,
+  imageLeaveTo
+} from '@/config/animations/thirdQuestionnaire.js'
 
 const previousRoute = ref('second-questionaire')
 const nextRoute = ref('fourth-questionaire')

@@ -1,54 +1,64 @@
 <template>
-  <TheContainer>
-    <TheHeader pageNum="1" />
+  <the-container>
+    <the-header page-num="1" />
     <Form @submit.prevent class="grid grid-cols-2 gap-3 mt-12" v-slot="{ meta }">
       <div class="flex flex-col gap-12 pr-36">
-        <TheInput
+        <the-input
           title="სახელი"
-          :isImportant="true"
+          :is-important="true"
           placeholder="იოსებ"
-          stateKey="first_name"
+          state-key="first_name"
           validation="required|minLength:3,სახელი|georgian"
         />
-        <TheInput
+        <the-input
           title="გვარი"
-          :isImportant="true"
+          :is-important="true"
           placeholder="ჯუღაშვილი"
-          stateKey="last_name"
+          state-key="last_name"
           validation="required|minLength:3,გვარი|georgian"
         />
-        <TheInput
+        <the-input
           title="მეილი"
           type="email"
-          :isImportant="true"
+          :is-important="true"
           placeholder="fbi@redberry.ge"
-          stateKey="email"
+          state-key="email"
           validation="required|email"
         />
-        <TheHint class="mt-18" />
+        <the-hint class="mt-18" />
       </div>
-      <TheImageContainer
-        mainSrc="@/assets/images/Scan.png"
-        hoverSrc="@/assets/images/YellowRectangle.png"
-        mainAlt="standing-people-with-star-eyes"
+      <the-image-container
+        main-src="@/assets/images/ScanImage.png"
+        hover-src="@/assets/images/YellowRectangleImage.png"
+        main-alt="standing-people-with-star-eyes"
         hover-alt="yellow-rectangle"
         styles="left-20 top-44 h-[72px] w-[622px]"
+        :image-enter-from="imageEnterFrom"
+        :image-enter-to="imageEnterTo"
+        :image-leave-from="imageLeaveFrom"
+        :image-leave-to="imageLeaveTo"
       />
-      <Buttons :previousRoute="previousRoute" :nextRoute="nextRoute" :isAvailable="meta.valid" />
+      <navigation-buttons
+        :previous-route="previousRoute"
+        :next-route="nextRoute"
+        :is-available="meta.valid"
+      />
     </Form>
-  </TheContainer>
+  </the-container>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { Form } from 'vee-validate'
 
-import TheHeader from '@/components/TheHeader.vue'
-import TheContainer from '@/components/TheContainer.vue'
 import TheInput from '@/components/form/TheInput.vue'
 import TheHint from '@/components/TheHint.vue'
-import Buttons from '@/components/form/Buttons.vue'
-import TheImageContainer from '@/components/TheImageContainer.vue'
+import {
+  imageEnterFrom,
+  imageEnterTo,
+  imageLeaveFrom,
+  imageLeaveTo
+} from '@/config/animations/firstQuestionnaire.js'
 
 const previousRoute = ref('/')
 const nextRoute = ref('second-questionaire')

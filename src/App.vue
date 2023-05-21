@@ -1,5 +1,9 @@
 <template>
-  <router-view />
+  <router-view v-slot="slotProps">
+    <transition name="route">
+      <component :is="slotProps.Component" />
+    </transition>
+  </router-view>
 </template>
 
 <style>
@@ -24,6 +28,21 @@ ul {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+}
+
+.route-enter-active,
+.route-leave-active {
+  transition: all 0.2s;
 }
 </style>
 
