@@ -47,17 +47,17 @@
           </p>
         </div>
       </div>
-      <the-image-container
-        main-image-name="DoctorImage"
-        hover-image-name="YellowStarImage"
-        main-alt="yellow-star"
-        hover-alt="red-circle"
-        styles="left-5 -top-7"
-        :image-enter-from="imageEnterFrom"
-        :image-enter-to="imageEnterTo"
-        :image-leave-from="imageLeaveFrom"
-        :image-leave-to="imageLeaveTo"
-      />
+      <div class="relative">
+        <img class="w-full" src="@/assets/images/DoctorImage.png" alt="doctor" />
+        <transition name="image3">
+          <img
+            v-if="animation"
+            class="left-5 -top-7 absolute -z-10"
+            src="@/assets/images/YellowStarImage.png"
+            alt="yellow-star"
+          />
+        </transition>
+      </div>
       <navigation-buttons
         :previous-route="previousRoute"
         :next-route="nextRoute"
@@ -68,21 +68,17 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import { hadVaccine, vaccinationStage, iAmWaiting } from '@/config/questionnaires/vaccine/index.js'
 
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
-import {
-  imageEnterFrom,
-  imageEnterTo,
-  imageLeaveFrom,
-  imageLeaveTo
-} from '@/config/animations/thirdQuestionnaire.js'
-
 const previousRoute = ref('second-questionaire')
 const nextRoute = ref('fourth-questionaire')
+
+const animation = ref(false)
+onMounted(() => (animation.value = true))
 
 const store = useStore()
 
@@ -99,3 +95,34 @@ watch(
   }
 )
 </script>
+
+<style scoped>
+.image3-enter-from {
+  width: 0;
+  transform: translate(-10px, 55px) scale(1.2);
+  opacity: 0;
+}
+
+.image3-enter-to {
+  width: 622px;
+  transform: translate(0) scale(1);
+  opacity: 1;
+}
+
+.image3-enter-active {
+  transition: 0.3s all ease-out;
+}
+.image3-leave-active {
+  transition: 0.5s all ease-out;
+}
+
+.image3-leave-from {
+  transform: translate(0) scale(1);
+  opacity: 1;
+}
+
+.image3-leave-to {
+  transform: translate(4px, -260px) scale(0.8);
+  opacity: 0;
+}
+</style>

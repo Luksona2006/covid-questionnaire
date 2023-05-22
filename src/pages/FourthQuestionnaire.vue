@@ -41,17 +41,17 @@
           </button>
         </div>
       </div>
-      <the-image-container
-        main-image-name="BikeImage"
-        hover-image-name="HeartImage"
-        main-alt="man-riding-bike"
-        hover-alt="pink-heart"
-        styles="left-[98px] top-[72px]"
-        :image-enter-from="imageEnterFrom"
-        :image-enter-to="imageEnterTo"
-        :image-leave-from="imageLeaveFrom"
-        :image-leave-to="imageLeaveTo"
-      />
+      <div class="relative">
+        <img class="w-full" src="@/assets/images/BikeImage.png" alt="man-riding-bike" />
+        <transition name="image4">
+          <img
+            v-if="animation"
+            class="left-[98px] top-[72px] absolute -z-10"
+            src="@/assets/images/HeartImage.png"
+            alt="pink-heart"
+          />
+        </transition>
+      </div>
       <navigation-buttons
         :has-next-page="false"
         :previous-route="previousRoute"
@@ -62,22 +62,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 import { onlineAttendance, workingInOffice } from '@/config/questionnaires/job/index.js'
-import {
-  imageEnterFrom,
-  imageEnterTo,
-  imageLeaveFrom,
-  imageLeaveTo
-} from '@/config/animations/fourthQuestionnaire.js'
 
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheTextarea from '@/components/form/TheTextarea.vue'
 
 const previousRoute = ref('third-questionaire')
+
+const animation = ref(false)
+onMounted(() => (animation.value = true))
 
 const router = useRouter()
 
@@ -124,3 +121,34 @@ function sendData(valid) {
   }
 }
 </script>
+
+<style scoped>
+.image4-enter-from {
+  width: 0;
+  transform: translate(-10px, -30px) scale(1.1);
+  opacity: 0;
+}
+
+.image4-enter-to {
+  width: 622px;
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image4-enter-active {
+  transition: 0.3s all ease-out;
+}
+.image4-leave-active {
+  transition: 0.5s all ease-out;
+}
+
+.image4-leave-from {
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image4-leave-to {
+  transform: translate(-450px, -300px) scale(22.8);
+  opacity: 0;
+}
+</style>

@@ -27,17 +27,21 @@
         />
         <the-hint class="mt-18" />
       </div>
-      <the-image-container
-        main-image-name="ScanImage"
-        hover-image-name="YellowRectangleImage"
-        main-alt="standing-people-with-star-eyes"
-        hover-alt="yellow-rectangle"
-        styles="left-20 top-44 h-[72px] w-[622px]"
-        :image-enter-from="imageEnterFrom"
-        :image-enter-to="imageEnterTo"
-        :image-leave-from="imageLeaveFrom"
-        :image-leave-to="imageLeaveTo"
-      />
+      <div class="relative">
+        <img
+          class="w-full"
+          src="@/assets/images/ScanImage.png"
+          alt="standing-people-with-star-eyes"
+        />
+        <transition name="image">
+          <img
+            v-if="animation"
+            class="left-20 top-44 h-[72px] w-[622px] absolute -z-10"
+            src="@/assets/images/YellowRectangleImage.png"
+            alt="yellow-rectangle"
+          />
+        </transition>
+      </div>
       <navigation-buttons
         :previous-route="previousRoute"
         :next-route="nextRoute"
@@ -48,18 +52,46 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Form } from 'vee-validate'
 
 import TheInput from '@/components/form/TheInput.vue'
 import TheHint from '@/components/TheHint.vue'
-import {
-  imageEnterFrom,
-  imageEnterTo,
-  imageLeaveFrom,
-  imageLeaveTo
-} from '@/config/animations/firstQuestionnaire.js'
 
 const previousRoute = ref('/')
 const nextRoute = ref('second-questionaire')
+
+const animation = ref(false)
+onMounted(() => (animation.value = true))
 </script>
+
+<style scoped>
+.image-enter-from {
+  width: 0;
+  transform: translate(-20px, -5px);
+  opacity: 0;
+}
+
+.image-enter-to {
+  width: 622px;
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image-enter-active {
+  transition: 0.3s all ease-out;
+}
+.image-leave-active {
+  transition: 0.5s all ease-out;
+}
+
+.image-leave-from {
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image-leave-to {
+  transform: translate(-150px, 25px) scaleX(0.6) scaleY(1.2);
+  opacity: 0;
+}
+</style>
