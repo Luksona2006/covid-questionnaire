@@ -1,3 +1,4 @@
+<!-- CAN BE USED BUT IT HAS ERROR ON SERVER STYLESHEET[i] NOT DEFINED -->
 <template>
   <div class="relative">
     <img class="w-full" :src="getImage(mainImageName)" :alt="mainAlt" />

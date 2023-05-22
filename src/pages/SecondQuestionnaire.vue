@@ -42,17 +42,17 @@
           />
         </div>
       </div>
-      <the-image-container
-        main-image-name="VaccinateImage"
-        hover-image-name="RedCircleImage"
-        main-alt="ill-man"
-        hover-alt="red-circle"
-        styles="left-5 top-44"
-        :image-enter-from="imageEnterFrom"
-        :image-enter-to="imageEnterTo"
-        :image-leave-from="imageLeaveFrom"
-        :image-leave-to="imageLeaveTo"
-      />
+      <div class="relative">
+        <img class="w-full" src="@/assets/images/VaccinateImage.png" alt="ill-man" />
+        <transition name="image2">
+          <img
+            v-if="animation"
+            class="left-5 top-44 absolute -z-10"
+            src="@/assets/images/RedCircleImage.png"
+            alt="red-circle"
+          />
+        </transition>
+      </div>
       <navigation-buttons
         :previous-route="previousRoute"
         :next-route="nextRoute"
@@ -63,19 +63,16 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { Form } from 'vee-validate'
 import { hadCovid, hadTest } from '@/config/questionnaires/covid/index.js'
 import { useStore } from 'vuex'
 
 import InputWithOptions from '@/components/form/InputWithOptions.vue'
 import TheInput from '@/components/form/TheInput.vue'
-import {
-  imageEnterFrom,
-  imageEnterTo,
-  imageLeaveFrom,
-  imageLeaveTo
-} from '@/config/animations/secondQuestionnaire.js'
+
+const animation = ref(false)
+onMounted(() => (animation.value = true))
 
 const previousRoute = ref('first-questionaire')
 const nextRoute = ref('third-questionaire')
@@ -113,3 +110,34 @@ watch(
   }
 )
 </script>
+
+<style scoped>
+.image2-enter-from {
+  width: 0;
+  transform: translate(-20px, -5px);
+  opacity: 0;
+}
+
+.image2-enter-to {
+  width: 622px;
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image2-enter-active {
+  transition: 0.3s all ease-out;
+}
+.image2-leave-active {
+  transition: 0.5s all ease-out;
+}
+
+.image2-leave-from {
+  transform: translate(0);
+  opacity: 1;
+}
+
+.image2-leave-to {
+  transform: translate(-150px, 25px) scaleX(0.6) scaleY(1.2);
+  opacity: 0;
+}
+</style>

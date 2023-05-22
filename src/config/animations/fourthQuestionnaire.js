@@ -22,7 +22,7 @@ const imageLeaveFrom = [
 const imageLeaveTo = [
   {
     key: 'transform',
-    value: 'translate(-450px, 300px) scale(24)'
+    value: 'translate(-450px, -300px) scale(22.8)'
   }
 ]
 
